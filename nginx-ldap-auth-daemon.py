@@ -221,6 +221,7 @@ class LDAPAuthHandler(AuthHandler):
             ldap_obj.bind_s(ldap_dn, ctx['pass'], ldap.AUTH_SIMPLE)
 
             self.log_message('Auth OK for user "%s"' % (ctx['user']))
+            self.send_header('username', ctx['user'])
 
             # Successfully authenticated user
             self.send_response(200)
