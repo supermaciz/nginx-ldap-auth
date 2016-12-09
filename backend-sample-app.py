@@ -60,7 +60,7 @@ class AppHandler(BaseHTTPRequestHandler):
         <tr>
           <td>Username: <input type="text" name="username"/></td>
         <tr>
-          <td>Password: <input type="text" name="password"/></td>
+          <td>Password: <input type="password" name="password"/></td>
         <tr>
           <td><input type="submit" value="Login"></td>
       </table>
