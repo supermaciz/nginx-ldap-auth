@@ -30,7 +30,7 @@ class AppHandler(BaseHTTPRequestHandler):
 
         self.send_response(200)
         self.end_headers()
-        self.wfile.write('Hello, world! Requested URL: ' + self.path + '\n')
+        #self.wfile.write('Hello, world! Requested URL: ' + self.path + '\n')
 
 
     # send login form html
@@ -51,9 +51,10 @@ class AppHandler(BaseHTTPRequestHandler):
 <html>
   <head>
     <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
-    <title>Auth form example</title>
+    <title>Roger-Skyline CI Auth</title>
   </head>
   <body>
+    <h1>Buildbot auth</h1>
     <form action="/login" method="post">
       <table>
         <tr>
