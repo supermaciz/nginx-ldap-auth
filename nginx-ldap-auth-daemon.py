@@ -12,7 +12,7 @@ from logging.handlers import SysLogHandler
 
 my_logger = logging.getLogger()
 my_logger.setLevel(logging.INFO)
-syslog_formatter = logging.Formatter('%(levelname)s :: %(message)s')
+syslog_formatter = logging.Formatter('nginx-ldap-daemon : %(levelname)s :: %(message)s')
 log_handler = SysLogHandler(address='/dev/log', facility=SysLogHandler.LOG_LOCAL7)
 log_handler.setFormatter(syslog_formatter)
 my_logger.addHandler(log_handler)
