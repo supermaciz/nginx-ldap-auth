@@ -7,6 +7,16 @@
 import sys, os, signal, base64, ldap, Cookie, argparse
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
+import logging
+from logging.handlers import SysLogHandler
+
+my_logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+syslog_formatter = logging.Formatter('%(levelname)s :: %(message)s')
+log_handler = SysLogHandler(address='/dev/log', facility=LOG_LOCAL7)
+log_handler.setFormatter(syslog_formatter)
+my_logger.addHandler(log_handler)
+
 #Listen = ('localhost', 8888)
 #Listen = "/tmp/auth.sock"    # Also uncomment lines in 'Requests are
                               # processed with UNIX sockets' section below
@@ -133,11 +143,22 @@ class AuthHandler(BaseHTTPRequestHandler):
         else:
             user = self.ctx['user']
 
-        sys.stdout.write("%s - %s [%s] %s\n" % (addr, user,
+        my_logger.info("%s - %s [%s] %s\n" % (addr, user,
                          self.log_date_time_string(), format % args))
 
     def log_error(self, format, *args):
-        self.log_message(format, *args)
+        if len(self.client_address) > 0:
+            addr = BaseHTTPRequestHandler.address_string(self)
+        else:
+            addr = "-"
+
+        if not hasattr(self, 'ctx'):
+            user = '-'
+        else:
+            user = self.ctx['user']
+
+        my_logger.warning("%s - %s [%s] %s\n" % (addr, user,
+                         self.log_date_time_string(), format % args))
 
 
 # Verify username/password against LDAP server
